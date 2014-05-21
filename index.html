@@ -14,6 +14,7 @@ window.onload = function() {
     code = (96 <= code && code <= 105)? code - 48 : code; // Fix numpad
     var character = String.fromCharCode(code);
     console.log("checking " + code + ", -" + character);
+
     switch (position) {
       case 0:
         return character.match(/[0-9]/) != null
@@ -53,11 +54,17 @@ window.onload = function() {
     if ((cursorPos == 9) || (cursorPos == 8)) {
       input.val(input.val().substring(0, 6));
     }
+  }
 
-    // Handle backspace of '0N' DD
-    if ((input.val().match("^0")) && (cursorPos == 2)) {
-      input.val("");
+  var slash = function(input) {
+    var position = input.prop("selectionStart");
+    if (position == 1 && input.val()[0] != "0") {
+      input.val("0" + input.val());
+    } else if (position == 6 && input.val()[5] != "0") {
+      var character = input.val()[5];
+      input.val(input.val().substring(0, 5) + "0" + character);
     }
+    return false;
   }
   
   $("#date").bind('input', function() {
@@ -83,8 +90,10 @@ window.onload = function() {
     var code = e.keyCode;
     if (code == 8) return true; // Backspace
     if (code >= 35 && code <= 40) return true; // Arrow keys, home, end
-    //if (code >= 48 && code <= 57) return true; // Numbers
-    //if (code >= 96 && code <= 105) return true; // Numpad numbers
+
+    if (code == 111 || code == 191) {
+      return slash(self);
+    }
 
     // Check valid code at position
     var position = self.prop("selectionStart");
