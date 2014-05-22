@@ -1,2 +1,7 @@
-js-date-input
+vali-date-coffee
 =============
+
+usage
+```javascript
+$("input#id.class").dateify();
+```
