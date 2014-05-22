@@ -1,4 +1,4 @@
-window.onload = function() {
+var setupDateField = function(datefield) {
 
   var daysInMonth = function(month) {
     if (month == 2) return 29;
@@ -61,8 +61,8 @@ window.onload = function() {
     }
     return false;
   }
-  
-  $("#date").bind('input', function() {
+
+  datefield.bind('input', function() {
     self = $(this);
     text = self.val();
     if (text.length == 1) {
@@ -78,7 +78,7 @@ window.onload = function() {
     }
   });
 
-  $("#date").bind('keydown', function(e) {
+  datefield.bind('keydown', function(e) {
     self = $(this);
 
     // Prevent unwanted inputs
@@ -95,7 +95,7 @@ window.onload = function() {
     return validChar(self.val(), position, code);
   });
 
-  $("#date").bind('keyup', function(e) {
+  datefield.bind('keyup', function(e) {
     self = $(this);
     if (e.keyCode == 8) {   // Backspace
       backspace(self);
@@ -107,4 +107,12 @@ window.onload = function() {
     }
 
   });
+}
+
+window.onload = function() {
+  (function($) {
+    $.fn.dateify = function() {
+      setupDateField($(this));
+    };
+  })(jQuery);
 }
