@@ -77,6 +77,7 @@ setupDateField = (datefield) ->
     # Immediately allow certain keys
     code = e.keyCode
     return true  if code is 8 # Backspace
+    return true  if code is 9 # Tab
     return true  if code >= 35 and code <= 40 # Arrow keys, home, end
 
     # The user has entered a slash
